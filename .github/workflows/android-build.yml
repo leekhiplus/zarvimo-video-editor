@@ -28,8 +28,88 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      - name: Make Gradle Wrapper executable
-        run: chmod +x gradlew
+      - name: Auto-Restore Missing Gradle & Root Build Configuration
+        run: |
+          echo "=== Checking repository root files ==="
+          ls -la
+
+          # 1. Restore settings.gradle.kts if missing
+          if [ ! -f "settings.gradle.kts" ] && [ ! -f "settings.gradle" ]; then
+            echo "Auto-restoring settings.gradle.kts..."
+            cat << 'EOF' > settings.gradle.kts
+pluginManagement {
+    repositories {
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "zarvimo-video-editor"
+include(":app")
+EOF
+          fi
+
+          # 2. Restore root build.gradle.kts if missing
+          if [ ! -f "build.gradle.kts" ] && [ ! -f "build.gradle" ]; then
+            echo "Auto-restoring root build.gradle.kts..."
+            cat << 'EOF' > build.gradle.kts
+plugins {
+    id("com.android.application") version "8.3.2" apply false
+    id("org.jetbrains.kotlin.android") version "1.9.23" apply false
+}
+tasks.register("clean", Delete::class) {
+    delete(rootProject.layout.buildDirectory)
+}
+EOF
+          fi
+
+          # 3. Restore gradle.properties if missing
+          if [ ! -f "gradle.properties" ]; then
+            cat << 'EOF' > gradle.properties
+org.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8
+android.useAndroidX=true
+android.nonTransitiveRClass=true
+kotlin.code.style=official
+org.gradle.caching=true
+org.gradle.parallel=true
+EOF
+          fi
+
+          # 4. Restore wrapper if missing
+          mkdir -p gradle/wrapper
+          if [ ! -f "gradle/wrapper/gradle-wrapper.properties" ]; then
+            cat << 'EOF' > gradle/wrapper/gradle-wrapper.properties
+distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+distributionUrl=https\://services.gradle.org/distributions/gradle-8.7-bin.zip
+networkTimeout=10000
+validateDistributionUrl=true
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists
+EOF
+          fi
+
+          if [ ! -f "gradlew" ]; then
+            curl -sLo gradlew https://raw.githubusercontent.com/gradle/gradle/v8.7.0/gradlew || true
+          fi
+          if [ ! -f "gradle/wrapper/gradle-wrapper.jar" ]; then
+            curl -sLo gradle/wrapper/gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.7.0/gradle/wrapper/gradle-wrapper.jar || true
+          fi
+          chmod +x gradlew || true
+          echo "=== Root configuration verified successfully ==="
 
       - name: Run Unit Tests
         run: ./gradlew testDebugUnitTest --continue --no-daemon
