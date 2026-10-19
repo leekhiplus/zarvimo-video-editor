@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Zarvimo Video Editor</string>
+    <string name="tagline">Next-Gen Neon Mobile Video Editing Suite</string>
+    <string name="new_project">New Project</string>
+    <string name="recent_projects">Recent Projects</string>
+    <string name="import_media">Import Media</string>
+    <string name="trim">Trim</string>
+    <string name="split">Split</string>
+    <string name="volume">Volume</string>
+    <string name="text_overlay">Text</string>
+    <string name="delete">Delete</string>
+    <string name="duplicate">Duplicate</string>
+    <string name="export">Export</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
+    <string name="aspect_16_9">16:9 Landscape</string>
+    <string name="aspect_9_16">9:16 Portrait (Reels/Shorts)</string>
+    <string name="aspect_1_1">1:1 Square</string>
+</resources>

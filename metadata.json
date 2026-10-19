@@ -1,0 +1,6 @@
+{
+  "name": "Zafronix Video Editor",
+  "description": "Phase 1 Android Video Editor built with Jetpack Compose, AndroidX Media3 Transformer & ExoPlayer, featuring neon UI, multi-track timeline, video editing suite, and ready-to-run GitHub Actions repository ZIP.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

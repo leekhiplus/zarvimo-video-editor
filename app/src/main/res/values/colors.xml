@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="zafronix_black_bg">#080B11</color>
+    <color name="zafronix_navy_surface">#10141E</color>
+    <color name="zafronix_navy_card">#161B28</color>
+    <color name="zafronix_navy_elevated">#1E2538</color>
+    <color name="zafronix_navy_border">#2A344C</color>
+
+    <!-- Neon Accents -->
+    <color name="zafronix_neon_blue">#00E5FF</color>
+    <color name="zafronix_neon_blue_glow">#3300E5FF</color>
+    <color name="zafronix_neon_violet">#7C3AED</color>
+    <color name="zafronix_neon_magenta">#FF007F</color>
+
+    <color name="zafronix_text_primary">#F8FAFC</color>
+    <color name="zafronix_text_secondary">#94A3B8</color>
+    <color name="zafronix_text_muted">#64748B</color>
+
+    <color name="zafronix_track_video">#00E5FF</color>
+    <color name="zafronix_track_audio">#7C3AED</color>
+    <color name="zafronix_track_text">#FF007F</color>
+</resources>
